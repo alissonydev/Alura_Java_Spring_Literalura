@@ -2,18 +2,25 @@ package com.github.alissonydev.literalura.dtos;
 
 import com.github.alissonydev.literalura.entities.Book;
 
+import java.util.List;
+
 public record BookResponseDTO(
 
         String title ,
         String authors ,
-        String languages ,
+        List<String> languages ,
         Integer downloadCount
 ) {
     public BookResponseDTO(Book entity) {
         this(
                 entity.getTitle() ,
-                entity.getAuthors().toString().replace("[","").replace("]","") ,
-                entity.getLanguages().getFirst() ,
+                entity.getAuthors().toString() ,
+
+                entity.getLanguages()
+                        .stream()
+                        .map(String::toString)
+                        .toList() ,
+
                 entity.getDownloadCount()
         );
     }

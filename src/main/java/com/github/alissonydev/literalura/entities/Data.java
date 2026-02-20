@@ -75,16 +75,4 @@ public class Data {
         this.results = results;
     }
 
-    @Override
-
-
-    public String toString() {
-        return "\n----- LIVRO -----"
-                + "\nTitulo: " + results.getFirst().getTitle()
-                + "\nAutor: " +  Arrays.toString(results.getFirst().getAuthors().toArray()).replace("[","").replace("]", "")
-                + "\nIdioma: " + Arrays.toString(results.getFirst().getLanguages().toArray()).replace("[","").replace("]", "")
-                + "\nNúmero de downloads: " + results.getFirst().getDownloadCount()
-                + "\n-----------------";
-    }
-
 }
