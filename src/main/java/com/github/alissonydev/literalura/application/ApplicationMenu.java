@@ -1,25 +1,29 @@
 package com.github.alissonydev.literalura.application;
 
+import com.github.alissonydev.literalura.dtos.BookResponseDTO;
 import com.github.alissonydev.literalura.entities.Data;
 import com.github.alissonydev.literalura.services.ConsumoApi;
+import com.github.alissonydev.literalura.services.IBookService;
 import com.github.alissonydev.literalura.services.IConverteDados;
 import com.github.alissonydev.literalura.services.IDadosService;
 import com.github.alissonydev.literalura.utils.Messages;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Scanner;
 
 @Service
 public class ApplicationMenu {
-
     private final ConsumoApi consumoApi;
+    private final IBookService bookService;
     private final IConverteDados conversor;
     private final IDadosService dataService;
     private final Scanner sc = new Scanner(System.in);
     private static final String URL = "https://gutendex.com/books/?search=";
 
-    public ApplicationMenu(ConsumoApi consumoApi , IConverteDados conversor , IDadosService dadosService) {
+    public ApplicationMenu(ConsumoApi consumoApi , IBookService bookService , IConverteDados conversor , IDadosService dadosService) {
         this.consumoApi = consumoApi;
+        this.bookService = bookService;
         this.conversor = conversor;
         this.dataService = dadosService;
     }
@@ -33,16 +37,20 @@ public class ApplicationMenu {
 
             switch (option) {
 
-
                 case 0 -> System.out.println("Saindo...");
                 case 1 -> findBookByTitleWeb();
-//                case 2 -> listarLivrosRegistrados();
+                case 2 -> findAllBooks();
 //                case 3 -> listarAutoresRegistrados();
 //                case 4 -> listarAutoresVivosEmUmDeterminadoAno();
 //                case 5 -> listarLivrosEmUmDeterminadoIdioma();
                 default -> System.out.println("Opção inválida!");
             }
         }
+    }
+
+    private void findAllBooks() {
+        final List<BookResponseDTO> allBooks = bookService.findAllBooks();
+        System.out.println(allBooks);
     }
 
     private void findBookByTitleWeb() {

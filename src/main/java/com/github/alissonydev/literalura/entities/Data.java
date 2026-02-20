@@ -83,7 +83,7 @@ public class Data {
                 + "\nTitulo: " + results.getFirst().getTitle()
                 + "\nAutor: " +  Arrays.toString(results.getFirst().getAuthors().toArray()).replace("[","").replace("]", "")
                 + "\nIdioma: " + Arrays.toString(results.getFirst().getLanguages().toArray()).replace("[","").replace("]", "")
-                + "\nNúmero de downloads: " + results.getFirst().getDownload_count()
+                + "\nNúmero de downloads: " + results.getFirst().getDownloadCount()
                 + "\n-----------------";
     }
 
