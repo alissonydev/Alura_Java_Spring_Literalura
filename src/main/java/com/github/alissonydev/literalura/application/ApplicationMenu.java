@@ -4,9 +4,11 @@ import com.github.alissonydev.literalura.dtos.AuthorResponseDTO;
 import com.github.alissonydev.literalura.dtos.BookResponseDTO;
 import com.github.alissonydev.literalura.entities.Data;
 import com.github.alissonydev.literalura.services.*;
+import com.github.alissonydev.literalura.services.exceptions.ResourceNotFoundException;
 import com.github.alissonydev.literalura.utils.Messages;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -42,9 +44,47 @@ public class ApplicationMenu {
                 case 2 -> findAllBooks();
                 case 3 -> findAllAuthors();
                 case 4 -> findLivingAuthorsByYear();
-//                case 5 -> listarLivrosEmUmDeterminadoIdioma();
+                case 5 -> findBooksByLanguage();
+                case 6 -> findAuthorByName();
                 default -> System.out.println("Opção inválida!");
             }
+        }
+    }
+
+    private void findAuthorByName() {
+        try {
+            System.out.print("Digite o nome do autor: ");
+            String authorName = sc.nextLine().toLowerCase();
+            final AuthorResponseDTO byName = authorService.findByName(authorName);
+            System.out.println(byName);
+        }
+        catch (ResourceNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void findBooksByLanguage() {
+
+        final String message = """                
+
+                Insira o idioma para realizar a busca:                
+
+                es - espanhol
+                en - inglês
+                fr - francês
+                pt - portugûes                
+
+                """;
+
+        System.out.print(message);
+        String language = sc.nextLine();
+
+        final List<BookResponseDTO> booksByLanguage = bookService.findBooksByLanguage(Collections.singletonList(language));
+
+        if (!booksByLanguage.isEmpty()) {
+            System.out.println(booksByLanguage);
+        } else {
+            System.out.println("Não existem livros nesse idioma no banco de dados");
         }
     }
 

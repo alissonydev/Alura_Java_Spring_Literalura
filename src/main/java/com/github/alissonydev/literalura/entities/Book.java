@@ -21,11 +21,10 @@ public class Book {
     @Column(columnDefinition = "text")
     private String title;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "tb_book_author",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
-
     private Set<Author> authors = new HashSet<>();
 
     private List<String> languages;
