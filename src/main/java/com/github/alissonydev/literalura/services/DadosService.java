@@ -1,7 +1,6 @@
 package com.github.alissonydev.literalura.services;
 
 import com.github.alissonydev.literalura.entities.Data;
-import com.github.alissonydev.literalura.repositories.IDadosRepository;
 import com.github.alissonydev.literalura.repositories.IDataRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

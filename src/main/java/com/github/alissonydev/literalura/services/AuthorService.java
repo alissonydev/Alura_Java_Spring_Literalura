@@ -1,7 +1,9 @@
 package com.github.alissonydev.literalura.services;
 
 import com.github.alissonydev.literalura.dtos.AuthorResponseDTO;
+import com.github.alissonydev.literalura.entities.Author;
 import com.github.alissonydev.literalura.repositories.IAuthorRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +21,18 @@ public class AuthorService implements IAuthorService {
     @Override
     @Transactional(readOnly = true)
     public List<AuthorResponseDTO> findAllAuthors() {
-        return authorRepository.findAll().stream()
+        return getList(authorRepository.findAll());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<AuthorResponseDTO> findLivingAuthorsByYear(int year) {
+        return getList(authorRepository.findLivingAuthorsByYear(year));
+    }
+
+    @NotNull
+    private List<AuthorResponseDTO> getList(List<Author> authors) {
+        return authors.stream()
                 .map(AuthorResponseDTO::new)
                 .toList();
     }
