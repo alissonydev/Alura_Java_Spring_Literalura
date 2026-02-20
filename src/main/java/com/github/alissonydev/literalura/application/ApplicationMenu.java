@@ -79,7 +79,7 @@ public class ApplicationMenu {
                 es - espanhol
                 en - inglês
                 fr - francês
-                pt - portugûes                
+                pt - português             
 
                 """;
 
