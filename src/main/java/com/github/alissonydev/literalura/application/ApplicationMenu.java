@@ -9,6 +9,7 @@ import com.github.alissonydev.literalura.utils.Messages;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -89,12 +90,26 @@ public class ApplicationMenu {
     }
 
     private void findLivingAuthorsByYear() {
-        System.out.print("\nDigite o ano que deseja pesquisar: ");
-        int anoAuthor = sc.nextInt();
-        sc.nextLine();
+        int anoAuthor;
+        do {
+            try {
+                System.out.print("\nDigite o ano que deseja pesquisar: ");
+                anoAuthor = sc.nextInt();
+                break;
+            }
+            catch (InputMismatchException ex) {
+                sc.next();
+                System.out.println("Ano inválido! Deve ser um valor inteiro!");
+            }
+        } while (true);
 
-        authorService.findLivingAuthorsByYear(anoAuthor)
-                .forEach(System.out::println);
+        final List<AuthorResponseDTO> livingAuthorsByYear = authorService.findLivingAuthorsByYear(anoAuthor);
+        if (!livingAuthorsByYear.isEmpty()) {
+            System.out.println(livingAuthorsByYear);
+        }
+        else {
+            System.out.println("Não existem livros desse período registrado na base de dados");
+        }
     }
 
     private void findAllAuthors() {
